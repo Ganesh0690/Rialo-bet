@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bet With Friends | Built on Rialo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="noise-overlay"></div>
+
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                        <rect x="2" y="2" width="24" height="24" rx="6" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="14" cy="14" r="5" fill="currentColor"/>
+                        <line x1="14" y1="2" x2="14" y2="9" stroke="currentColor" stroke-width="2"/>
+                        <line x1="14" y1="19" x2="14" y2="26" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+                <span class="logo-text">BetFriends</span>
+                <span class="logo-chain">on Rialo</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div id="userInfo" class="user-info hidden">
+                <span class="user-balance" id="userBalance">0</span>
+                <span class="balance-label">tokens</span>
+                <div class="user-avatar" id="userAvatar"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <section id="loginSection" class="section login-section">
+            <div class="login-card">
+                <div class="login-header">
+                    <h1>Bet With Friends</h1>
+                    <p>Drop a question. Stake on it. Weather API resolves it on-chain. No oracles needed.</p>
+                    <div class="chain-badge">
+                        <span class="pulse"></span>
+                        Rialo Devnet
+                    </div>
+                </div>
+                <div class="login-form">
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input type="text" id="loginUsername" placeholder="your name" autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="you@email.com" autocomplete="off">
+                    </div>
+                    <button class="btn btn-primary btn-full" id="loginBtn">
+                        Sign in with Rialo Identity
+                    </button>
+                    <p class="login-note">No wallet needed. Rialo uses your email as your Web3 passport.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="appSection" class="section app-section hidden">
+            <div class="tabs">
+                <button class="tab active" data-tab="create">Create Bet</button>
+                <button class="tab" data-tab="browse">Live Bets</button>
+                <button class="tab" data-tab="history">My History</button>
+            </div>
+
+            <div id="tab-create" class="tab-content active">
+                <div class="create-card">
+                    <h2>Create a New Bet</h2>
+                    <div class="input-group">
+                        <label>Your Question</label>
+                        <input type="text" id="betQuestion" placeholder='e.g. "Will it rain tomorrow in NYC?"'>
+                    </div>
+                    <div class="row-2">
+                        <div class="input-group">
+                            <label>City (for weather resolve)</label>
+                            <input type="text" id="betCity" placeholder="New York" value="New York">
+                        </div>
+                        <div class="input-group">
+                            <label>Weather Condition</label>
+                            <select id="betCondition">
+                                <option value="rain">Rain</option>
+                                <option value="temperature">Temperature > threshold</option>
+                                <option value="snow">Snow</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row-2">
+                        <div class="input-group">
+                            <label>Min Stake (tokens)</label>
+                            <input type="number" id="betStake" placeholder="10" value="10">
+                        </div>
+                        <div class="input-group" id="thresholdGroup" style="display:none">
+                            <label>Temperature Threshold (°C)</label>
+                            <input type="number" id="betThreshold" placeholder="25" value="25">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-full" id="createBetBtn">
+                        Create Bet & Schedule Auto-Resolve
+                    </button>
+                    <div class="info-box">
+                        <span class="info-icon">i</span>
+                        <span>On Rialo, this bet auto-resolves via a native HTTPS call to the weather API. No oracle. No bot. The chain calls the API directly.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-browse" class="tab-content">
+                <div class="browse-header">
+                    <h2>Live Bets</h2>
+                    <button class="btn btn-ghost" id="refreshBets">Refresh</button>
+                </div>
+                <div id="betsList" class="bets-grid"></div>
+                <div id="noBets" class="empty-state">
+                    <p>No bets yet. Create the first one!</p>
+                </div>
+            </div>
+
+            <div id="tab-history" class="tab-content">
+                <h2>My Betting History</h2>
+                <div id="historyList" class="bets-grid"></div>
+                <div id="noHistory" class="empty-state">
+                    <p>You haven't placed any bets yet.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="betModal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

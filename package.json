@@ -1,0 +1,14 @@
+{
+  "name": "bet-with-friends-rialo",
+  "version": "1.0.0",
+  "description": "Bet With Friends - A social betting dApp concept built for Rialo blockchain",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
+  }
+}
